@@ -1,0 +1,8 @@
+name: Python CI
+
+on: [push]
+
+jobs:
+  ci:
+    name: Run linter and tests
+    uses: remla23-team5/cicd/.github/workflows/python-ci.yaml@main
