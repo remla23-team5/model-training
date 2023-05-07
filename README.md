@@ -10,5 +10,5 @@ b) Run the script.
 
 $ python SA_model.py
 
-c) The trained model and BoW dictionary used in prediction will be saved under this directory.
+c) The trained model and BoW dictionary used in prediction will be saved under the current directory.
 
