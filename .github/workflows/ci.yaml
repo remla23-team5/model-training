@@ -1,6 +1,12 @@
 name: Python CI
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - '!master'
 
 jobs:
   ci:
