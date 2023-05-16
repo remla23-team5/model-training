@@ -20,12 +20,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: make requirements 
       - name: Lint with flake8
         run: make lint
-      - name: Preprocess dataset
+      - name: Install requirements & Preprocess dataset
         run: make data
       - name: Train model
         run: make train
