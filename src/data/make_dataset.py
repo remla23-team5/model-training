@@ -19,11 +19,10 @@ def prepare_stopwords():
     return stemmer, all_stopwords
 
 
-def preprocess_data(review, stemmer, all_stopwords):
+def preprocess_data(review, stemmer, stopwords):
     review = re.sub('[^a-zA-Z]', ' ', review)
-    review = review.lower()
-    review = review.split()
-    review = [stemmer.stem(word) for word in review if word not in set(all_stopwords)]
+    review = review.lower().split()
+    review = [stemmer.stem(w) for w in review if w not in set(stopwords)]
     review = ' '.join(review)
     return review
 
@@ -42,9 +41,10 @@ def main(input_filepath, output_filepath):
     dataset = pd.read_csv(input_filepath, delimiter='\t', quoting=3)
 
     # Data preprocessing
-    stemmer, all_stopwords = prepare_stopwords()
+    stemmer, stopwords = prepare_stopwords()
 
-    dataset['Review'] = dataset['Review'].apply(preprocess_data, args=(stemmer, all_stopwords))
+    dataset['Review'] = dataset['Review']\
+        .apply(preprocess_data, args=(stemmer, stopwords))
 
     logger.info(f'outputting processed data set to {output_filepath}')
 

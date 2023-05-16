@@ -30,7 +30,8 @@ def main(dataset_filepath, output_filepath):
     y = df.iloc[:, -1].values
 
     # Dividing dataset into training and test set
-    logger.info('dividing dataset into training and test set, with test size of 20%')
+    logger.info('dividing dataset into training and test set,\
+                 with test size of 20%')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
     # Model fitting (Naive Bayes)
