@@ -6,5 +6,6 @@ on:
       - main
 
 jobs:
-  release:
+  create-release:
+    name: Create release
     uses: remla23-team5/cicd/.github/workflows/release.yaml@main
