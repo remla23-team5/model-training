@@ -230,8 +230,9 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'model-training', u'model-training Documentation',
-     u"remla23-team5", 'model-training',
-     'Welcome to model-training, the place where the restaurant sentiment analysis model for the remla23 project is trained', 'Miscellaneous'),
+    u"remla23-team5", 'model-training',
+    'Welcome to model-training, the place where the restaurant sentiment analysis model for the remla23 project is trained', 
+    'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

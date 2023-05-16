@@ -10,5 +10,22 @@ on:
 
 jobs:
   ci:
-    name: Run linter and tests
-    uses: remla23-team5/cicd/.github/workflows/python-ci.yaml@main
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: make requirements 
+      - name: Lint with flake8
+        run: make lint
+      - name: Preprocess dataset
+        run: make data
+      - name: Train model
+        run: make train
