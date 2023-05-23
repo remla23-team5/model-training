@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install requirements
         run: make requirements
-      - name: Lint with pylint & dslinter
+      - name: Lint with mypy, flake8, pylint & dslinter
         run: make lint
       - name: Preprocess dataset
         run: make data
