@@ -1,4 +1,6 @@
-name: Lint, train model and test
+name: ML Continuous Integration
+
+run-name: Run Python ML CI
 
 on:
   pull_request:
@@ -10,16 +12,18 @@ on:
 
 jobs:
   ci:
+    name: lint and test ml pipeline
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8"]
+        python-version: ["3.8, 3.9"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
       - name: Install requirements
         run: make requirements
       - name: Lint with mypy, flake8, pylint & dslinter
