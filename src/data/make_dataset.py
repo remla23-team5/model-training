@@ -44,8 +44,7 @@ def main(input_filepath, output_filepath):
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data at %s', input_filepath)
 
-    # Loading dataset
-    # pylint: disable=column-selection-pandas
+    # Loading dataset (no column selection necessary)
     dataset = pd.read_csv(
         input_filepath,
         delimiter='\t',

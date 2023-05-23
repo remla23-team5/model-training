@@ -11,10 +11,10 @@ flask==1.1.4
 flasgger
 
 # code quality
-mypy
+mypy==1.3.0
 flake8==4.0.0
-pylint==1.9.3
-dslinter
+pylint==2.11.1
+dslinter==1.1.0
 coverage
 pytest
 

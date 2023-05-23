@@ -23,7 +23,6 @@ def main(dataset_filepath, output_filepath):
     logger.info('loading processed dataset from %s', dataset_filepath)
 
     # Loading dataset (no column selection necessary)
-    # pylint: disable=column-selection-pandas
     df = pd.read_csv(dataset_filepath, dtype={'Review': str, 'Liked': int})
     df = df.dropna()
 

@@ -1,4 +1,4 @@
-name: Python CI
+name: Lint, train model and test
 
 on:
   pull_request:
