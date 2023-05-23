@@ -26,11 +26,11 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
 ## Make Dataset
-data: requirements
+data:
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
 
 ## Train Model
-train: requirements
+train:
 	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
 
 ## Delete all compiled Python files
@@ -38,9 +38,11 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8
+## Lint using mypy, flake8, pylint & dslinter
 lint:
-	flake8 src
+	mypy src --config-file=config/mypy.ini
+	flake8 src --config=config/tox.ini
+	pylint src --rcfile=config/pylintrc
 
 ## Upload Data to S3
 sync_data_to_s3:

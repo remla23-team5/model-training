@@ -1,15 +1,16 @@
-import pandas as pd
-import joblib
-import click
-import logging
+"""Trains a model to predict the sentiment of a restaurant review"""
 
-from pathlib import Path
+import logging
+import joblib
+import pandas as pd
 
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
+
+import click
 
 
 @click.command()
@@ -19,10 +20,11 @@ def main(dataset_filepath, output_filepath):
     """ Trains a model to predict the sentiment of a restaurant review
     """
     logger = logging.getLogger(__name__)
-    logger.info(f'loading processed dataset from {dataset_filepath}')
+    logger.info('loading processed dataset from %s', dataset_filepath)
 
-    # Loading dataset
-    df = pd.read_csv(dataset_filepath)
+    # Loading dataset (no column selection necessary)
+    # pylint: disable=column-selection-pandas
+    df = pd.read_csv(dataset_filepath, dtype={'Review': str, 'Liked': int})
     df = df.dropna()
 
     # Data transformation
@@ -32,6 +34,7 @@ def main(dataset_filepath, output_filepath):
     # Dividing dataset into training and test set
     logger.info('dividing dataset into training and test set,\
                  with test size of 20%')
+
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
     # Model fitting (Naive Bayes)
@@ -47,19 +50,15 @@ def main(dataset_filepath, output_filepath):
     logger.info('fitting model')
     model.fit(X_train, y_train)
 
-    logger.info(f'model accuracy on test set: {model.score(X_test, y_test)}')
+    logger.info('model accuracy on test set: %.2f%%', model.score(X_test, y_test) * 100)
 
     # Exporting the classifier pipeline to later use in prediction
-    logger.info(f'saving model to {output_filepath}')
+    logger.info('saving model to %s', output_filepath)
 
     joblib.dump(model, output_filepath)
 
 
 if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
-
+    # Ignore pylint error for click decorated methods
+    # pylint: disable=no-value-for-parameter
     main()
