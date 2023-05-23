@@ -1,17 +1,21 @@
+"""
+This module reads raw data and preprocesses it to be used for model training.
+"""
+
 # -*- coding: utf-8 -*-
-import click
 import logging
-import pandas as pd
-
-from pathlib import Path
-
 import re
+
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import pandas as pd
+
+import click
 
 
 def prepare_stopwords():
+    """Download stopwords and create stemmer for data preprocessing."""
     nltk.download('stopwords')
     stemmer = PorterStemmer()
     all_stopwords = stopwords.words('english')
@@ -19,10 +23,13 @@ def prepare_stopwords():
     return stemmer, all_stopwords
 
 
-def preprocess_data(review, stemmer, stopwords):
+def preprocess_data(review, stemmer, words_to_remove):
+    """Preprocess data by removing stopwords and punctuation,
+       and lower-casing + stemming the words.
+    """
     review = re.sub('[^a-zA-Z]', ' ', review)
     review = review.lower().split()
-    review = [stemmer.stem(w) for w in review if w not in set(stopwords)]
+    review = [stemmer.stem(w) for w in review if w not in set(words_to_remove)]
     review = ' '.join(review)
     return review
 
@@ -35,18 +42,23 @@ def main(input_filepath, output_filepath):
         cleaned data ready to be analyzed (saved in ../processed).
     """
     logger = logging.getLogger(__name__)
-    logger.info(f'making final data set from raw data at {input_filepath}')
+    logger.info('making final data set from raw data at %s', input_filepath)
 
-    # Loading dataset
-    dataset = pd.read_csv(input_filepath, delimiter='\t', quoting=3)
+    # Loading dataset (no column selection necessary)
+    dataset = pd.read_csv(
+        input_filepath,
+        delimiter='\t',
+        quoting=3,
+        dtype={'Review': str, 'Liked': int}
+    )
 
     # Data preprocessing
-    stemmer, stopwords = prepare_stopwords()
+    stemmer, english_stopwords = prepare_stopwords()
 
     dataset['Review'] = dataset['Review']\
-        .apply(preprocess_data, args=(stemmer, stopwords))
+        .apply(preprocess_data, args=(stemmer, english_stopwords))
 
-    logger.info(f'outputting processed data set to {output_filepath}')
+    logger.info('outputting processed data set to %s', output_filepath)
 
     dataset.to_csv(output_filepath, index=False)
 
@@ -54,10 +66,6 @@ def main(input_filepath, output_filepath):
 
 
 if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
-
+    # Ignore pylint error for click decorated methods
+    # pylint: disable=no-value-for-parameter
     main()
