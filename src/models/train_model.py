@@ -65,6 +65,7 @@ def main(dataset_filepath, output_filepath):
     with open(json_path, "w") as f:
         json.dump(accuracy_json, f)
 
+
 if __name__ == '__main__':
     # Ignore pylint error for click decorated methods
     # pylint: disable=no-value-for-parameter
