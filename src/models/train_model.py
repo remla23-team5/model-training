@@ -2,6 +2,7 @@
 
 import logging
 import joblib
+import json
 import pandas as pd
 
 from sklearn.compose import ColumnTransformer
@@ -49,13 +50,20 @@ def main(dataset_filepath, output_filepath):
     logger.info('fitting model')
     model.fit(X_train, y_train)
 
-    logger.info('model accuracy on test set: %.2f%%', model.score(X_test, y_test) * 100)
+    accuracy = model.score(X_test, y_test)
+    accuracy_json = {"accuracy": accuracy}
+
+    logger.info('model accuracy on test set: %.2f%%', accuracy * 100)
 
     # Exporting the classifier pipeline to later use in prediction
     logger.info('saving model to %s', output_filepath)
 
     joblib.dump(model, output_filepath)
 
+    # Save the metric to json for DVC
+    json_path = "./models/accuracy.json"
+    with open(json_path, "w") as f:
+        json.dump(accuracy_json, f)
 
 if __name__ == '__main__':
     # Ignore pylint error for click decorated methods

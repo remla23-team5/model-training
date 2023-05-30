@@ -18,3 +18,8 @@ pytest
 click
 Sphinx
 python-dotenv>=0.5.1
+
+# configuration management
+mllint==0.12.2
+dvc==2.58.1
+dvc-gdrive==2.19.2
