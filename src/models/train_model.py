@@ -1,6 +1,7 @@
 """Trains a model to predict the sentiment of a restaurant review"""
 
 import logging
+import json
 import joblib
 import pandas as pd
 
@@ -49,12 +50,19 @@ def main(dataset_filepath, output_filepath):
     logger.info('fitting model')
     model.fit(X_train, y_train)
 
+    accuracy_json = {"accuracy": model.score(X_test, y_test)}
+
     logger.info('model accuracy on test set: %.2f%%', model.score(X_test, y_test) * 100)
 
     # Exporting the classifier pipeline to later use in prediction
     logger.info('saving model to %s', output_filepath)
 
     joblib.dump(model, output_filepath)
+
+    # Save the metric to json for DVC
+    json_path = "./models/accuracy.json"
+    with open(json_path, "w", encoding="utf-8") as json_file:
+        json.dump(accuracy_json, json_file)
 
 
 if __name__ == '__main__':

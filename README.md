@@ -67,3 +67,30 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+## DVC
+
+Check how the DVC pipeline looks like, use:
+
+```shell
+dvc dag
+```
+
+Check a DAG of the dependencies of all the artifacts, use:
+
+```shell
+dvc dag --outs
+```
+
+Run the experiment, use:
+
+```shell
+dvc exp run
+```
+
+Check the experiment log, use:
+
+```shell
+dvc exp show
+```
+
