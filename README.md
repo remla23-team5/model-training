@@ -5,14 +5,60 @@ model-training
 
 Welcome to model-training, the place where the restaurant sentiment analysis model for the remla23 project is trained
 
+There are 2 ways of running the project.
+
+## 1. DVC
+
+(Optional) To check the DVC pipeline / directed acyclical graph (DAG), use:
+
+```shell
+dvc dag
+```
+
+(Optional) To check the DAG of the dependencies of all the artifacts, use:
+
+```shell
+dvc dag --outs
+```
+
+To run the experiment, use:
+
+```shell
+dvc exp run
+```
+
+To check the experiment log, use:
+
+```shell
+dvc exp show
+```
+## 2. Make
+
+(Optional) Create & Activate virtual environment.
+
+To install requirements, use:
+```make
+make requirements
+```
+
+To run linter, use:
+```make
+make lint
+```
+
 In order to (only) preprocess the data, use:
 ```make
 make data
 ```
 
-In order to train the model with the data from previous step, use:
+In order to train the model (depends on previous step!), use:
 ```make
 make train
+```
+
+In order to run the tests, use:
+```make
+make test
 ```
 
 other commands can be found in Makefile.
@@ -69,30 +115,4 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
-
-## DVC
-
-Check how the DVC pipeline looks like, use:
-
-```shell
-dvc dag
-```
-
-Check a DAG of the dependencies of all the artifacts, use:
-
-```shell
-dvc dag --outs
-```
-
-Run the experiment, use:
-
-```shell
-dvc exp run
-```
-
-Check the experiment log, use:
-
-```shell
-dvc exp show
-```
 
