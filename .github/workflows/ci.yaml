@@ -33,3 +33,5 @@ jobs:
         run: make data
       - name: Train model
         run: make train
+      - name: Test with pytest
+        run: make test

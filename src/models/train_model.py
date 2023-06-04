@@ -3,7 +3,6 @@
 import logging
 import json
 import joblib
-import numpy as np
 import pandas as pd
 
 from sklearn.compose import ColumnTransformer
@@ -13,6 +12,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
 import click
+
 
 @click.command()
 @click.argument('dataset_filepath', type=click.Path(exists=True))
@@ -25,9 +25,10 @@ def main(dataset_filepath, output_filepath, random_state=0):
     logger.info('loading processed dataset from %s', dataset_filepath)
 
     # Loading dataset (no column selection necessary)
-    df = pd.read_csv(dataset_filepath, dtype={'Review': str, 'Liked': int})
+    df: pd.DataFrame = pd.read_csv(dataset_filepath, dtype={'Review': str, 'Liked': int})
 
-    # Data transformation
+    # Data transformation (pylint doesn't recognize iloc, so we disable the warning)
+    # pylint: disable=no-member
     X = df.iloc[:, 0:-1]
     y = df.iloc[:, -1].values
 
@@ -35,7 +36,8 @@ def main(dataset_filepath, output_filepath, random_state=0):
     logger.info('dividing dataset into training and test set,\
                  with test size of 20%')
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=random_state)
+    X_train, X_test, y_train, y_test = \
+        train_test_split(X, y, test_size=0.20, random_state=random_state)
 
     logger.info('training model')
 
@@ -54,6 +56,7 @@ def main(dataset_filepath, output_filepath, random_state=0):
     logger.info('saving model to %s', output_filepath)
 
     joblib.dump(model, output_filepath)
+
 
 def train(X, y):
     """ Trains a model to predict the sentiment of a restaurant review
@@ -77,6 +80,7 @@ def train(X, y):
     model.fit(X_train, y_train)
 
     return model
+
 
 if __name__ == '__main__':
     # Ignore pylint error for click decorated methods
