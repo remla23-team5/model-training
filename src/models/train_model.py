@@ -39,7 +39,7 @@ def main(dataset_filepath, output_filepath, random_state=0):
 
     logger.info('training model')
 
-    model = train(X_train, y_train, logger, random_state)
+    model = train(X_train, y_train)
 
     accuracy_json = {"accuracy": model.score(X_test, y_test)}
 
