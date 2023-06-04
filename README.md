@@ -1,6 +1,8 @@
 model-training
 ==============================
 
+![badge](https://gist.githubusercontent.com/LucaCras/7c841f9e8e8c5e2fbe202b7a9758d798/raw/7645f71b88cac167fd7327d0c9454a2357de5819/codecov.json)
+
 Welcome to model-training, the place where the restaurant sentiment analysis model for the remla23 project is trained
 
 In order to (only) preprocess the data, use:
