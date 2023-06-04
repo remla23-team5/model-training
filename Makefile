@@ -33,6 +33,9 @@ data:
 train:
 	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
 
+test:
+	${PYTHON_INTERPRETER} -m pytest --junitxml=pytest.xml --cov-report=term-missing:skip-covered --cov=src src/tests/ | tee pytest-coverage.txt
+
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
