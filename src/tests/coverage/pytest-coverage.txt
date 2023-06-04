@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.9.16, pytest-7.3.1, pluggy-1.0.0
+rootdir: /Users/luca/Code/TU_Delft/REMLA/A1/model-training
+plugins: dvc-2.58.1, cov-4.1.0, hydra-core-1.3.2
+collected 1 item
+
+src/tests/test_robustness.py .                                           [100%]
+
+- generated xml file: /Users/luca/Code/TU_Delft/REMLA/A1/model-training/src/tests/coverage/pytest.xml -
+
+---------- coverage: platform darwin, python 3.9.16-final-0 ----------
+Name                        Stmts   Miss  Cover   Missing
+---------------------------------------------------------
+src/data/make_dataset.py       33     33     0%   6-71
+src/models/train_model.py      41     17    59%   24-58, 88
+---------------------------------------------------------
+TOTAL                         101     50    50%
+
+8 files skipped due to complete coverage.
+
+============================== 1 passed in 2.66s ===============================
