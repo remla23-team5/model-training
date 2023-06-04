@@ -12,15 +12,15 @@ jobs:
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-
+      - name: Test with pytest
+        run: make test
       - name: Pytest coverage comment
         if: ${{ github.ref == 'refs/heads/main' }}
         id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
         with:
           hide-comment: true
-          pytest-coverage-path: ./data/pytest-coverage_4.txt
-
+          pytest-coverage-path: src/tests/coverage/pytest-coverage.txt
       - name: Update Readme with Coverage Html
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
