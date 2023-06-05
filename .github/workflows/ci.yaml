@@ -35,3 +35,11 @@ jobs:
         run: make train
       - name: Test with pytest
         run: make test
+      - name: Pytest coverage comment
+        if: ${{ github.event_name == 'pull_request' }}
+        id: coverageComment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          hide-comment: false
+          pytest-coverage-path: src/tests/coverage/pytest-coverage.txt
+          junitxml-path: src/tests/coverage/pytest.xml
