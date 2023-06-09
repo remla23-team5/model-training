@@ -1,4 +1,5 @@
 name: Run DVC pipeline and push to remote storage
+
 on:
   workflow_dispatch:
   push: 
@@ -8,15 +9,21 @@ on:
       - config/**
       - src/**
       - data/*
+
+env:
+  GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+
 jobs:
   run-dvc-pipeline:
     name: Run DVC pipeline
     runs-on: ubuntu-latest
-    container: docker://dvcorg/cml-py3:latest
     steps:
       - name: Check out the current repository
         id: checkout
         uses: actions/checkout@v3
+      - name: Set up DVC
+        id: dvc
+        uses: iterative/setup-dvc@v1
       - name: Pull data from DVC
         run: |
           dvc pull
