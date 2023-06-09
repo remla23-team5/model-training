@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Pull data from DVC
         run: |
-          dvc remote modify origin --local auth basic
-          dvc remote modify origin --local user ${{ secrets.GDRIVE_USERNAME }}
-          dvc remote modify origin --local password ${{ secrets.GDRIVE_TOKEN }}
+          dvc remote modify myremote --local auth basic
+          dvc remote modify myremote --local user ${{ secrets.GDRIVE_USERNAME }}
+          dvc remote modify myremote --local password ${{ secrets.GDRIVE_TOKEN }}
           dvc pull
       - name: Run the pipeline with DVC
         run: dvc repro
