@@ -1,0 +1,35 @@
+name: Run DVC pipeline and push to remote storage
+on:
+  workflow_dispatch:
+  push: 
+    branches:
+     - main
+    paths:
+      - config/**
+      - src/**
+      - data/*
+jobs:
+  run-dvc-pipeline:
+    name: Run DVC pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the current repository
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Pull data from DVC
+        run: |
+          dvc remote modify origin --local auth basic
+          dvc remote modify origin --local user ${{ secrets.GDRIVE_USERNAME }}
+          dvc remote modify origin --local password ${{ secrets.GDRIVE_TOKEN }}
+          dvc pull
+      - name: Run the pipeline with DVC
+        run: dvc repro
+      - name: Push the outcomes to DVC remote storage 
+        run: dvc push
+      - name: Commit changes in dvc.lock
+        if: ${{ github.event_name == 'push' }}
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Commit changes in dvc.lock
+          branch: main
+          file_pattern: dvc.lock

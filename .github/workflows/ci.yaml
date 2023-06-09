@@ -36,10 +36,10 @@ jobs:
       - name: Test with pytest
         run: make test
       - name: Pytest coverage comment
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'pull_request' }}
         id: coverageComment
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          hide-comment: true
+          hide-comment: false
           pytest-coverage-path: src/tests/coverage/pytest-coverage.txt
           junitxml-path: src/tests/coverage/pytest.xml
