@@ -24,13 +24,12 @@ jobs:
       - name: Set up DVC
         id: dvc
         uses: iterative/setup-dvc@v1
+      - name: Pull data from DVC
+        run: dvc pull
       - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-          cache: 'pip'
-      - name: Pull data from DVC
-        run: dvc pull
       - name: Install requirements
         run: make requirements
       - name: Run the pipeline with DVC
