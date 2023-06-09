@@ -24,16 +24,15 @@ jobs:
       - name: Set up DVC
         id: dvc
         uses: iterative/setup-dvc@v1
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.9
           cache: 'pip'
+      - name: Pull data from DVC
+        run: dvc pull
       - name: Install requirements
         run: make requirements
-      - name: Pull data from DVC
-        run: |
-          dvc pull
       - name: Run the pipeline with DVC
         run: dvc repro
       - name: Push the outcomes to DVC remote storage 
