@@ -5,8 +5,8 @@ stages:
       data/processed/restaurant_reviews.csv
     deps:
     - path: src/data/make_dataset.py
-      md5: ff60bc4bf7e2088a83ad855d5c3a11ee
-      size: 1481
+      md5: 0c57aa56deb4c3b77ca3becf7977582c
+      size: 1482
     outs:
     - path: data/processed/restaurant_reviews.csv
       md5: 39b902956a164104dda8f21618c9d8d5
