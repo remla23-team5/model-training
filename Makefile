@@ -34,7 +34,7 @@ train:
 	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
 
 test:
-	${PYTHON_INTERPRETER} -m pytest --junitxml=src/tests/coverage/pytest.xml --cov-report=term-missing:skip-covered --cov=src src/tests/ | tee src/tests/coverage/pytest-coverage.txt
+	${PYTHON_INTERPRETER} -m pytest --junitxml=src/tests/coverage/pytest.xml --cov-report=xml:src/tests/coverage/coverage.xml --cov=src src/tests/
 
 ## Delete all compiled Python files
 clean:
@@ -46,6 +46,7 @@ lint:
 	mypy src --config-file=config/mypy.ini
 	flake8 src --config=config/tox.ini
 	pylint src --rcfile=config/pylintrc
+	mllint
 
 ## Upload Data to S3
 sync_data_to_s3:

@@ -1,0 +1,23 @@
+rules:
+    # Tests are located in the src / tests folder, so this rule is disabled
+    disabled: [testing/tests-folder]
+    custom: []
+git:
+    maxFileSize: 10000000
+code-quality:
+    linters:
+        - pylint
+        - mypy
+        # Already use flake8 & ruff as linters
+testing:
+    report: "src/tests/coverage/pytest.xml"
+    targets:
+        minimum: 1
+        ratio:
+            tests: 1
+            other: 4
+    coverage:
+        report: "src/tests/coverage/coverage.xml"
+        targets:
+            line: 80
+
