@@ -4,35 +4,13 @@ This module reads raw data and preprocesses it to be used for model training.
 
 # -*- coding: utf-8 -*-
 import logging
-import re
 
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 import pandas as pd
 
 import click
 
-
-def prepare_stopwords():
-    """Download stopwords and create stemmer for data preprocessing."""
-    nltk.download('stopwords')
-    stemmer = PorterStemmer()
-    all_stopwords = stopwords.words('english')
-    all_stopwords.remove('not')
-    return stemmer, all_stopwords
-
-
-def preprocess_data(review, stemmer, words_to_remove):
-    """Preprocess data by removing stopwords and punctuation,
-       and lower-casing + stemming the words.
-    """
-    review = re.sub('[^a-zA-Z]', ' ', review)
-    review = review.lower().split()
-    review = [stemmer.stem(w) for w in review if w not in set(words_to_remove)]
-    review = ' '.join(review)
-    return review
-
+from lib2.preprocessing import prepare_stopwords, preprocess_data
+from lib2.version_util import VersionUtil
 
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
@@ -53,6 +31,8 @@ def main(input_filepath, output_filepath):
     )
 
     # Data preprocessing
+    logger.info('preprocessing data, using lib version: %s', VersionUtil().get_version())
+
     stemmer, english_stopwords = prepare_stopwords()
 
     dataset['Review'] = dataset['Review']\

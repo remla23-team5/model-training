@@ -38,9 +38,8 @@ jobs:
       - name: Push the outcomes to DVC remote storage 
         run: dvc push
       - name: Commit changes in dvc.lock
-        if: ${{ github.event_name == 'push' }}
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit changes in dvc.lock
-          branch: main
+          branch: ${{ github.ref }}
           file_pattern: dvc.lock
