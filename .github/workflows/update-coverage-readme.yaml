@@ -18,7 +18,7 @@ jobs:
         uses: MishaKav/pytest-coverage-comment@main
         with:
           hide-comment: true
-          pytest-xml-coverage-path: src/tests/coverage/coverage.xml
+          pytest-xml-coverage-path: ../src/tests/coverage/coverage.xml
           junitxml-path: src/tests/coverage/pytest.xml
 
       - name: Check the output coverage
