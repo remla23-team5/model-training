@@ -5,8 +5,8 @@ stages:
       data/processed/restaurant_reviews.csv
     deps:
     - path: src/data/make_dataset.py
-      md5: 0c57aa56deb4c3b77ca3becf7977582c
-      size: 1482
+      md5: 864c9acb752701288b118f28f39ba56f
+      size: 1472
     outs:
     - path: data/processed/restaurant_reviews.csv
       md5: 39b902956a164104dda8f21618c9d8d5
@@ -18,9 +18,9 @@ stages:
       md5: 39b902956a164104dda8f21618c9d8d5
       size: 31609
     outs:
-    - path: models/accuracy.json
-      md5: eaba43a2cc29dacb7e65aba7dd876f8b
-      size: 32
+    - path: models/metrics.json
+      md5: eb74c184a79c0f9e29543bd66d836df0
+      size: 271
     - path: models/naive_bayes_classifier.pkl
-      md5: 97bb5d001bc00dd8b1b777df8e08bc98
-      size: 78566
+      md5: 6f020317ef423e8c57bd12ecf5622057
+      size: 79814

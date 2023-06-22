@@ -13,5 +13,5 @@ stages:
     outs:
     - models/naive_bayes_classifier.pkl
     metrics:
-      - models/accuracy.json:
+      - models/metrics.json:
           cache: false

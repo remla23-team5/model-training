@@ -6,12 +6,10 @@ import pytest
 
 
 class TestRobustness:
-
     @pytest.fixture
     def df(self) -> Generator[pd.DataFrame, None, None]:
         df = pd.read_csv(
-            'data/processed/restaurant_reviews.csv',
-            dtype={'Review': str, 'Liked': int}
+            "data/processed/restaurant_reviews.csv", dtype={"Review": str, "Liked": int}
         )
         yield df
 
@@ -22,8 +20,9 @@ class TestRobustness:
         X, y = df.iloc[:, 0:-1], df.iloc[:, -1].values
         scores: list[float] = []
         for seed in range(5):
-            X_train, X_test, y_train, y_test = \
-                train_test_split(X, y, test_size=0.20, random_state=seed)
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.20, random_state=seed
+            )
             model = train(X_train, y_train)
             new_score = self.evaluate_score(model, X_test, y_test)
             for score in scores:
