@@ -43,9 +43,9 @@ clean:
 
 ## Lint using mypy, flake8, pylint & dslinter
 lint:
-	mypy src --config-file=config/mypy.ini
-	flake8 src --config=config/tox.ini
-	pylint src --rcfile=config/pylintrc
+	$(PYTHON_INTERPRETER) -m mypy src --config-file=config/mypy.ini
+	$(PYTHON_INTERPRETER) -m flake8 src --config=config/tox.ini
+	$(PYTHON_INTERPRETER) -m pylint src --rcfile=config/pylintrc
 
 report:
 	mllint -o reports/mllint.md
