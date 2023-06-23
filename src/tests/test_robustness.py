@@ -11,7 +11,7 @@ class TestRobustness:
         df = pd.read_csv(
             "data/processed/restaurant_reviews.csv", dtype={"Review": str, "Liked": int}
         )
-        yield df
+        yield df.dropna()
 
     def evaluate_score(self, model, X_test, y_test):
         return model.score(X_test, y_test)
