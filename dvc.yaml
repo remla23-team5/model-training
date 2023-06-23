@@ -7,7 +7,7 @@ stages:
     outs:
     - data/processed/restaurant_reviews.csv
   train:
-    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
+    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
     deps:
     - data/processed/restaurant_reviews.csv
     outs:
