@@ -27,11 +27,11 @@ requirements: test_environment
 
 ## Make Dataset
 data:
-	poetry run src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
+	poetry run python src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
 
 ## Train Model
 train:
-	poetry run src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
+	poetry run python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
 
 test:
 	poetry run pytest --junitxml=src/tests/coverage/pytest.xml --cov-report=xml:src/tests/coverage/coverage.xml --cov=src src/tests/
