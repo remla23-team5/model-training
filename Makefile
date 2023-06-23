@@ -27,14 +27,14 @@ requirements: test_environment
 
 ## Make Dataset
 data:
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
+	poetry run src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
 
 ## Train Model
 train:
-	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
+	poetry run src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
 
 test:
-	${PYTHON_INTERPRETER} -m pytest --junitxml=src/tests/coverage/pytest.xml --cov-report=xml:src/tests/coverage/coverage.xml --cov=src src/tests/
+	poetry run pytest --junitxml=src/tests/coverage/pytest.xml --cov-report=xml:src/tests/coverage/coverage.xml --cov=src src/tests/
 
 ## Delete all compiled Python files
 clean:
@@ -43,12 +43,12 @@ clean:
 
 ## Lint using mypy, flake8, pylint & dslinter
 lint:
-	$(PYTHON_INTERPRETER) -m mypy src --config-file=config/mypy.ini
-	$(PYTHON_INTERPRETER) -m flake8 src --config=config/tox.ini
-	$(PYTHON_INTERPRETER) -m pylint src --rcfile=config/pylintrc
+	poetry run mypy src --config-file=config/mypy.ini
+	poetry run -m flake8 src --config=config/tox.ini
+	poetry run -m pylint src --rcfile=config/pylintrc
 
 report:
-	mllint -o reports/mllint.md
+	poetry run mllint -o reports/mllint.md
 
 ## Upload Data to S3
 sync_data_to_s3:
