@@ -44,8 +44,8 @@ clean:
 ## Lint using mypy, flake8, pylint & dslinter
 lint:
 	poetry run mypy src --config-file=config/mypy.ini
-	poetry run -m flake8 src --config=config/tox.ini
-	poetry run -m pylint src --rcfile=config/pylintrc
+	poetry run flake8 src --config=config/tox.ini
+	poetry run pylint src --rcfile=config/pylintrc
 
 report:
 	poetry run mllint -o reports/mllint.md
