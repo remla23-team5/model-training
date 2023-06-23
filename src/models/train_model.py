@@ -16,9 +16,12 @@ import click
 
 @click.command()
 @click.argument("dataset_filepath", type=click.Path(exists=True))
-@click.argument("output_filepath", type=click.Path())
+@click.argument("output_filepath", type=click.Path(), default="./models/naive_bayes_classifier.pkl")
+@click.argument("metrics_filepath", type=click.Path(), default="./models/metrics.json")
 @click.argument("random_state", type=int, default=0)
-def main(dataset_filepath, output_filepath, random_state=0):
+# Disabling too many locals warning, as all local variables are necessary
+# pylint: disable=too-many-locals
+def main(dataset_filepath, output_filepath, metrics_filepath, random_state=0):
     """Trains a model to predict the sentiment of a restaurant review"""
     logger = logging.getLogger(__name__)
     logger.info("loading processed dataset from %s", dataset_filepath)
@@ -71,8 +74,7 @@ def main(dataset_filepath, output_filepath, random_state=0):
     logger.info("model accuracy on test set: %.2f%%", model.score(X_test, y_test) * 100)
 
     # Save the metric to json for DVC
-    json_path = "./models/metrics.json"
-    with open(json_path, "w", encoding="utf-8") as json_file:
+    with open(metrics_filepath, "w", encoding="utf-8") as json_file:
         json.dump(metrics, json_file)
 
     # Exporting the classifier pipeline to later use in prediction
