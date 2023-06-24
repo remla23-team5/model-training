@@ -1,26 +1,37 @@
 schema: '2.0'
 stages:
+  train:
+    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
+      models/metrics.json
+    deps:
+    - path: data/processed/restaurant_reviews.csv
+      md5: 39b902956a164104dda8f21618c9d8d5
+      size: 32510
+    outs:
+    - path: models/metrics.json
+      md5: f39a0fa30aefcd68359f8658882795e7
+      size: 254
+    - path: models/naive_bayes_classifier.pkl
+      md5: 63bb2f016aeaf3fc605a82537a05e166
+      size: 74790
+  download_data:
+    cmd: python src/data/download_data.py
+    deps:
+    - path: src/data/download_data.py
+      md5: 751a46d93a6bc12bed1fa62f0f574e43
+      size: 1183
+    outs:
+    - path: data/raw/a1_RestaurantReviews_HistoricDump.tsv
+      md5: 102f1f4193e0bdebdd6cce7f13e0a839
+      size: 55587
   data_pre:
     cmd: python src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv
       data/processed/restaurant_reviews.csv
     deps:
-    - path: src/data/make_dataset.py
-      md5: 864c9acb752701288b118f28f39ba56f
-      size: 1472
+    - path: data/raw/a1_RestaurantReviews_HistoricDump.tsv
+      md5: 102f1f4193e0bdebdd6cce7f13e0a839
+      size: 55587
     outs:
     - path: data/processed/restaurant_reviews.csv
       md5: 39b902956a164104dda8f21618c9d8d5
-      size: 31609
-  train:
-    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
-    deps:
-    - path: data/processed/restaurant_reviews.csv
-      md5: 39b902956a164104dda8f21618c9d8d5
-      size: 31609
-    outs:
-    - path: models/metrics.json
-      md5: eb74c184a79c0f9e29543bd66d836df0
-      size: 271
-    - path: models/naive_bayes_classifier.pkl
-      md5: 6f020317ef423e8c57bd12ecf5622057
-      size: 79814
+      size: 32510

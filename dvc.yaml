@@ -1,17 +1,24 @@
 stages:
-  data_pre:
-    cmd: python src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv
-      data/processed/restaurant_reviews.csv
-    deps:
-    - src/data/make_dataset.py
-    outs:
-    - data/processed/restaurant_reviews.csv
   train:
-    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl models/metrics.json
+    cmd: python src/models/train_model.py data/processed/restaurant_reviews.csv models/naive_bayes_classifier.pkl
+      models/metrics.json
     deps:
     - data/processed/restaurant_reviews.csv
     outs:
     - models/naive_bayes_classifier.pkl
     metrics:
-      - models/metrics.json:
-          cache: false
+    - models/metrics.json:
+        cache: false
+  download_data:
+    cmd: python src/data/download_data.py
+    deps:
+    - src/data/download_data.py
+    outs:
+    - data/raw/a1_RestaurantReviews_HistoricDump.tsv
+  data_pre:
+    cmd: python src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv
+      data/processed/restaurant_reviews.csv
+    deps:
+    - data/raw/a1_RestaurantReviews_HistoricDump.tsv
+    outs:
+    - data/processed/restaurant_reviews.csv

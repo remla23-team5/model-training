@@ -25,6 +25,10 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install poetry
 	$(PYTHON_INTERPRETER) -m poetry install
 
+## Download Dataset
+download:
+	poetry run python src/data/download_data.py
+
 ## Make Dataset
 data:
 	poetry run python src/data/make_dataset.py data/raw/a1_RestaurantReviews_HistoricDump.tsv data/processed/restaurant_reviews.csv
