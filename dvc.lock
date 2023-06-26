@@ -18,8 +18,8 @@ stages:
     cmd: python src/data/download_data.py
     deps:
     - path: src/data/download_data.py
-      md5: 751a46d93a6bc12bed1fa62f0f574e43
-      size: 1183
+      md5: e8fd5c3ad4b9c6c821b650baee9e4d2d
+      size: 1796
     outs:
     - path: data/raw/a1_RestaurantReviews_HistoricDump.tsv
       md5: 102f1f4193e0bdebdd6cce7f13e0a839
