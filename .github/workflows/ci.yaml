@@ -31,6 +31,8 @@ jobs:
         run: make requirements
       - name: Lint with mypy, flake8, pylint & dslinter
         run: make lint
+      - name: Download dataset
+        run: make download
       - name: Preprocess dataset
         run: make data
       - name: Train model
