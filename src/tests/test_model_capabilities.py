@@ -17,7 +17,7 @@ class TestCapabilities():
         df = pd.read_csv(
             "data/processed/restaurant_reviews.csv", dtype={"Review": str, "Liked": int}
         )
-        return df.dropna()
+        yield df.dropna()
 
 
     def evaluate_score(self, model, X_test, y_test):
