@@ -1,37 +1,60 @@
-import requests
+"""Module responsible for downloading the raw dataset from google drive"""
 
-def download_file_from_google_drive(id, destination):
-    URL = "https://docs.google.com/uc?export=download"
+import requests
+import click
+
+
+def download_file_from_google_drive(file_id, destination):
+    """Downloads the raw dataset from google drive"""
+    download_url = "https://docs.google.com/uc?export=download"
 
     session = requests.Session()
 
-    response = session.get(URL, params = { 'id' : id }, stream = True)
+    response = session.get(download_url, params={"id": file_id}, stream=True)
     token = get_confirm_token(response)
 
     if token:
-        params = { 'id' : id, 'confirm' : token }
-        response = session.get(URL, params = params, stream = True)
+        params = {"id": file_id, "confirm": token}
+        response = session.get(download_url, params=params, stream=True)
 
-    save_response_content(response, destination)    
+    save_response_content(response, destination)
+
 
 def get_confirm_token(response):
+    """Utility function for getting the token"""
     for key, value in response.cookies.items():
-        if key.startswith('download_warning'):
+        if key.startswith("download_warning"):
             return value
 
     return None
 
-def save_response_content(response, destination):
-    CHUNK_SIZE = 32768
 
-    with open(destination, "wb") as f:
-        for chunk in response.iter_content(CHUNK_SIZE):
-            if chunk: # filter out keep-alive new chunks
-                f.write(chunk)
+def save_response_content(response, destination):
+    """Function to save the response content to the destination file"""
+    chunk_size = 32768
+
+    with open(destination, "wb") as file:
+        for chunk in response.iter_content(chunk_size):
+            if chunk:
+                file.write(chunk)
+
+
+@click.command()
+@click.argument(
+    "file_id", type=click.STRING, default="1bCFMWa1lgymQtj6vukXTrtfF47TeKQLu"
+)
+@click.argument(
+    "destination_path",
+    type=click.Path(),
+    default="./data/raw/a1_RestaurantReviews_HistoricDump.tsv",
+)
+def main(file_id, destination_path):
+    """Main function to be run with the CLI."""
+    download_file_from_google_drive(file_id, destination_path)
+    print("Successfully downloaded data from gdrive")
 
 
 if __name__ == "__main__":
-    file_id = '1bCFMWa1lgymQtj6vukXTrtfF47TeKQLu'
-    destination = './data/raw/a1_RestaurantReviews_HistoricDump.tsv'
-    download_file_from_google_drive(file_id, destination)
-    print("Successfully downloaded data from gdrive")
+    # Ignore pylint error for click decorated methods
+    # pylint: disable=no-value-for-parameter
+    main()
