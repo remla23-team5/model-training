@@ -4,7 +4,7 @@ import pytest
 import joblib
 
 
-class TestCapabilities():
+class TestCapabilities:
     @pytest.fixture
     def trained_model(self):
         return joblib.load("models/naive_bayes_classifier.pkl")
@@ -27,9 +27,8 @@ class TestCapabilities():
         # slicing based on the word food
         sliced_data = test_data[test_data["Review"].str.contains("food", case=False)]
 
-        sliced_X, sliced_y= sliced_data.iloc[:, 0:-1], sliced_data.iloc[:, -1].values
+        sliced_X, sliced_y = sliced_data.iloc[:, 0:-1], sliced_data.iloc[:, -1].values
 
         sliced_score = self.evaluate_score(trained_model, sliced_X, sliced_y)
 
         assert normal_score == pytest.approx(sliced_score, 0.2)
-

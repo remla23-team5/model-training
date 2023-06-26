@@ -8,7 +8,7 @@ import time
 from src.models.train_model import train
 
 
-class TestMonitoring():
+class TestMonitoring:
     @pytest.fixture
     def df(self) -> Generator[pd.DataFrame, None, None]:
         df = pd.read_csv(
@@ -39,4 +39,3 @@ class TestMonitoring():
         end_time = time.time()
         time_taken = end_time - start_time
         assert time_taken < 10  # it should take less than 10 seconds to train
-

@@ -5,7 +5,7 @@ from typing import Generator
 import pytest
 
 
-class TestFeatureDistribution():
+class TestFeatureDistribution:
     @pytest.fixture
     def df(self) -> Generator[pd.DataFrame, None, None]:
         df = pd.read_csv(
@@ -15,7 +15,8 @@ class TestFeatureDistribution():
 
     def test_monitoring_invariants(self, df: pd.DataFrame):
         """
-        Test that the distribution of features in the training and test set are similar using the P.S. test.
+        Test that the distribution of features in the training and test set are similar
+        For this we use the P.S. test.
         """
         X, y = df.iloc[:, 0:-1], df.iloc[:, -1].values
         X_train, X_test, _, _ = train_test_split(X, y, test_size=0.2, random_state=42)
