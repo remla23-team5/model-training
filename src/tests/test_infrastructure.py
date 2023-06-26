@@ -1,7 +1,5 @@
 from pathlib import Path
-import pytest
 from click.testing import CliRunner
-from click.testing import Result
 
 from src.data.download_data import main as download_data
 from src.data.make_dataset import main as make_dataset
@@ -9,7 +7,7 @@ from src.models.train_model import main as train_model
 
 
 class TestInfrastructure():
-                
+
     def test_pipeline(self) -> None:
         runner = CliRunner()
         with runner.isolated_filesystem():
@@ -28,3 +26,4 @@ class TestInfrastructure():
             assert train_result.exit_code == 0
             assert Path("test_metrics.json").exists()
             assert Path("test_model.pkl").exists()
+

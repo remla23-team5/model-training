@@ -1,9 +1,9 @@
 from sklearn.model_selection import train_test_split
 from scipy.stats import ks_2samp
-import numpy as np
 import pandas as pd
 from typing import Generator
 import pytest
+
 
 class TestFeatureDistribution():
     @pytest.fixture

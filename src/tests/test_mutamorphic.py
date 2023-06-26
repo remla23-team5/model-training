@@ -1,16 +1,17 @@
 import pytest
 import joblib
-import nlpaug.augmenter.word as naw  
+import nlpaug.augmenter.word as naw
 from typing import Generator
 import pandas as pd
 import numpy as np
 import time
 
+
 class TestMutamorphic():
     @pytest.fixture
     def trained_model(self):
         return joblib.load("models/naive_bayes_classifier.pkl")
-    
+
     @pytest.fixture
     def test_data(self) -> Generator[pd.DataFrame, None, None]:
         test_data = pd.read_csv(
@@ -18,12 +19,11 @@ class TestMutamorphic():
         )
         yield test_data.dropna()
 
-   
     def test_word_mutations(self, trained_model, test_data):
         aug = naw.SynonymAug(aug_src='wordnet')
 
-        X, y = test_data.iloc[:, 0:-1], test_data.iloc[:, -1].values
-        
+        X, _ = test_data.iloc[:, 0:-1], test_data.iloc[:, -1].values
+
         X_aug = []
         for origin in X["Review"]:
             mutant = str(aug.augment(origin))
@@ -40,7 +40,7 @@ class TestMutamorphic():
             origin = str(X["Review"].iloc[idx])
             mutant = aug.augment(origin)
             mutant_pd = pd.DataFrame({'Review': mutant})
-            
+
             y_pred_ori = y_pred[idx]
             y_pred_per = trained_model.predict(mutant_pd)[0]
 
@@ -55,4 +55,3 @@ class TestMutamorphic():
 
         assert no_mutant < 10
 
-        
