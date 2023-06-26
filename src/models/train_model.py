@@ -15,7 +15,7 @@ import click
 
 
 @click.command()
-@click.argument("dataset_filepath", type=click.Path(exists=True))
+@click.argument("dataset_filepath", type=click.Path(exists=True), default="./data/processed/restaurant_reviews.csv")
 @click.argument("output_filepath", type=click.Path(), default="./models/naive_bayes_classifier.pkl")
 @click.argument("metrics_filepath", type=click.Path(), default="./models/metrics.json")
 @click.argument("random_state", type=int, default=0)

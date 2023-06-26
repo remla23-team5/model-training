@@ -27,7 +27,7 @@ requirements: test_environment
 
 ## Download Dataset
 download:
-	poetry run python src/data/download_data.py
+	poetry run python src/data/download_data.py 1bCFMWa1lgymQtj6vukXTrtfF47TeKQLu data/raw/a1_RestaurantReviews_HistoricDump.tsv
 
 ## Make Dataset
 data:

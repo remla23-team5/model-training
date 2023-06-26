@@ -1,4 +1,5 @@
 import requests
+import click
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
@@ -29,9 +30,12 @@ def save_response_content(response, destination):
             if chunk: # filter out keep-alive new chunks
                 f.write(chunk)
 
+@click.command()
+@click.argument("file_id", type=click.STRING, default="1bCFMWa1lgymQtj6vukXTrtfF47TeKQLu")
+@click.argument("destination_path", type=click.Path(), default="./data/raw/a1_RestaurantReviews_HistoricDump.tsv")
+def main(file_id, destination_path):
+    download_file_from_google_drive(file_id, destination_path)
+    print("Successfully downloaded data from gdrive")
 
 if __name__ == "__main__":
-    file_id = '1bCFMWa1lgymQtj6vukXTrtfF47TeKQLu'
-    destination = './data/raw/a1_RestaurantReviews_HistoricDump.tsv'
-    download_file_from_google_drive(file_id, destination)
-    print("Successfully downloaded data from gdrive")
+    main()
