@@ -36,7 +36,7 @@ jobs:
 
           echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
 
-      - name: Create the Badge
+      - name: Coverage Badge
         uses: schneegans/dynamic-badges-action@v1.6.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
@@ -46,3 +46,13 @@ jobs:
           message: ${{ steps.coverageComment.outputs.coverage }}
           color: ${{ steps.coverageComment.outputs.color }}
           namedLogo: python
+
+      - name: Test Results Badge
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 7c841f9e8e8c5e2fbe202b7a9758d798
+          filename: test-results.json
+          label: Tests
+          message: "${{ steps.coverageComment.outputs.tests }} tests, ${{ steps.coverageComment.outputs.failures }} failures"
+          color: ${{ steps.coverageComment.outputs.failures == 0 && "green" || "red" }}
