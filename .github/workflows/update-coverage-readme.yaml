@@ -55,4 +55,4 @@ jobs:
           filename: test-results.json
           label: Tests
           message: "${{ steps.coverageComment.outputs.tests }} tests, ${{ steps.coverageComment.outputs.failures }} failures"
-          color: ${{ steps.coverageComment.outputs.failures == 0 && "green" || "red" }}
+          color: ${{ steps.coverageComment.outputs.failures == 0 && 'green' || 'red' }}
