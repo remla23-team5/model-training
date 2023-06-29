@@ -1,6 +1,7 @@
 model-training
 ==============================
 
+Disclaimer: badges are updated each Friday, status may not reflect current state of the repository.
 ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/LucaCras/7c841f9e8e8c5e2fbe202b7a9758d798/raw/7645f71b88cac167fd7327d0c9454a2357de5819/codecov.json) ![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/LucaCras/7c841f9e8e8c5e2fbe202b7a9758d798/raw/baa5c69fcd3cd65a0fe57113d58d3c9b759fc5f5/test-results.json)
 
 Welcome to model-training, the place where the restaurant sentiment analysis model for the remla23 project is trained
